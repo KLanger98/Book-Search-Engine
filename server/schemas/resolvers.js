@@ -45,23 +45,29 @@ const resolvers = {
             return {token, user}
         },
 
-        saveBook: async (parent, {bookId, userId, authors, description, title, image, link}) => {
-            return User.findOneAndUpdate(
+        saveBook: async (parent, {bookId, userId, authors, description, title, image, link}, context) => {
+            if(context.user){
+                return User.findOneAndUpdate(
                 {_id: userId},
                 {$addToSet: {savedBooks: {bookId, authors, description, title, image, link}}},
                 {
                 new: true,
                 runValidators: true
                 })
+            }
+            
+            throw AuthenticationError;
         },
 
 
-        removeBook: async (parent, {userId, bookId}) => {
-            return User.findOneAndUpdate(
+        removeBook: async (parent, {userId, bookId}, context) => {
+            if(context.user){
+                return User.findOneAndUpdate(
                 {_id: userId},
                 {$pull: {savedBooks: {bookId: bookId}}},
                 {new: true}
             )
+            }
         }
 
     }
