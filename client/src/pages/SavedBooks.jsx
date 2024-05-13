@@ -7,7 +7,6 @@ import {
   Col
 } from 'react-bootstrap';
 
-import { getMe } from '../utils/API';
 import Auth from '../utils/auth';
 import { removeBookId } from '../utils/localStorage';
 
@@ -17,20 +16,16 @@ import { QUERY_ME } from '../utils/queries';
 import { REMOVE_BOOK } from '../utils/mutations';
 
 const SavedBooks = () => {
-  const [userData, setUserData] = useState({});
+  //Set User data state
 
-  const { loading, data } = useQuery(QUERY_ME);
+  //Find Current user
+  const { loading, data, refetch } = useQuery(QUERY_ME);
 
-  //Find current user
-  const userDataLength = Object.keys(userData).length;
+  const userData = data?.me || {};
 
-  useEffect(() => {
-    
-    const user = data?.me || {};
-    if (!loading && user) {
-      setUserData(user);
-    }
-  }, [loading, data])
+  // useEffect(() => {
+  //   refetch();
+  // }, [])
 
   // Delete book useMutation hook
   const [deleteBook, { error }] = useMutation(REMOVE_BOOK, {
@@ -59,7 +54,7 @@ const SavedBooks = () => {
   };
 
   // if data isn't here yet, say so
-  if (!userDataLength) {
+  if (loading) {
     return <h2>LOADING...</h2>;
   }
 

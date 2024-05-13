@@ -25,7 +25,12 @@ const SearchBooks = () => {
   const [savedBookIds, setSavedBookIds] = useState(getSavedBookIds());
 
   //Save books mutation
-  const [saveBook, {error: saveBookError, data: saveBookData}] = useMutation(SAVE_BOOK);
+  const [saveBook, { error: saveBookError, data: saveBookData }] = useMutation(
+    SAVE_BOOK,
+    {
+      refetchQueries: [QUERY_ME],
+    }
+  );
 
   //Query current user
 
@@ -57,7 +62,6 @@ const SearchBooks = () => {
       const { items } = await response.json();
 
       const bookData = items.map((book) => ({
-        
         bookId: book.id,
         authors: book.volumeInfo.authors || ['No author to display'],
         title: book.volumeInfo.title,

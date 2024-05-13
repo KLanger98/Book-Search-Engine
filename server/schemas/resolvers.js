@@ -21,7 +21,6 @@ const resolvers = {
 
     Mutation: {
         login: async (parent, {email, password}) => {
-            console.log('hello there')
             const user = await User.findOne({email});
 
             if(!user){
@@ -45,10 +44,10 @@ const resolvers = {
             return {token, user}
         },
 
-        saveBook: async (parent, {bookId, userId, authors, description, title, image, link}, context) => {
+        saveBook: async (parent, {bookId, authors, description, title, image, link}, context) => {
             if(context.user){
                 return User.findOneAndUpdate(
-                {_id: userId},
+                {_id: context.user._id},
                 {$addToSet: {savedBooks: {bookId, authors, description, title, image, link}}},
                 {
                 new: true,
@@ -63,7 +62,7 @@ const resolvers = {
         removeBook: async (parent, {userId, bookId}, context) => {
             if(context.user){
                 return User.findOneAndUpdate(
-                {_id: userId},
+                {_id: context.user._id},
                 {$pull: {savedBooks: {bookId: bookId}}},
                 {new: true}
             )
