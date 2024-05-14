@@ -11,8 +11,14 @@ If you would like to install this project on your local environment simply clone
 You will need MongoDB installed on your computer to use database features. 
 
 ## Usage
-To use this application make sure you make an account using the "login/signup" button in the navigation bar where you will be prompted to fill out a form to log in or sign up. 
+To use this application make sure you make an account using the "login/signup" button in the navigation bar where you will be prompted to fill out a form to log in or sign up.
+
+![Login or Signup](./client/src/assets/LoginSignUp.png)
 
 Once Signed up or logged in you will be able to search for books using the search bar. You will then be presented with a series of books that you can add to your saved list by clicking 'Save book'.
 
+![Search books page](./client/src/assets/SearchBooks.png)
+
 You can access your saved books by selecting the 'Select your books' option in the navigation bar. You will then be presented with your list of saved books. You can remove a book from your list by selecting the 'Delete this Book!' button. 
+
+![Saved books](./client/src/assets/SavedBooks.png)
